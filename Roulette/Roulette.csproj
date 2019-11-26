@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Config\SiteLoader.cs" />
     <Compile Include="Defines.cs" />
+    <Compile Include="Gamer\GamerAG.cs" />
     <Compile Include="Gamer\GamerBase.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

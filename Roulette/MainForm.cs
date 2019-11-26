@@ -68,12 +68,15 @@ namespace Roulette
             switch(SiteLoader.GetInstance().GetSupplierType(cbSupplier.Text))
             {
                 case SupplierType.SUPPLIER_AG:
+                    gamer = new GamerAG(this);
                     break;
                 default:
                     break;
             }
             if (gamer != null)
             {
+                WindowState = FormWindowState.Normal;
+                Size = new Size(800, 600);
                 ImageCapTimer.Start();
                 gamer.Start();
                 btnStart.Enabled = false;
@@ -126,6 +129,7 @@ namespace Roulette
         private void ImageCapTimer_Tick(object sender, EventArgs e)
         {
             Image image = BitmapCapture.GetWindowCapture(panelWeb);
+            gamer.ParseImage(image);
         }
     }
 }
