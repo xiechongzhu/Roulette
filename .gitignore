@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs
+/Roulette/.vs/Roulette/v16
+/Roulette/bin/x86/Debug
+/Roulette/obj
+/Roulette/packages
