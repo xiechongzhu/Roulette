@@ -10,7 +10,8 @@ namespace Roulette
     {
         RESULT_UNKNOW,
         RESULT_RED,
-        RESULT_BLACK
+        RESULT_BLACK,
+        RESULT_GREEN
     }
 
     public enum GameState
@@ -25,5 +26,12 @@ namespace Roulette
     {
         SUPPLIER_UNKNOW,
         SUPPLIER_AG
+    }
+
+    public class ResultHistory
+    {
+        public UInt64 CountBlack;
+        public UInt64 CountRed;
+        public UInt64 CountGreen;
     }
 }

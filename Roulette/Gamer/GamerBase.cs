@@ -12,9 +12,10 @@ namespace Roulette.Gamer
         protected GameResult gameResult = GameResult.RESULT_UNKNOW;
         protected GameState gameState = GameState.GAME_UNKNOW;
         MainForm mainForm;
-        bool isRunning = false;
+        private bool isRunning = false;
+        ResultHistory resultHistory = new ResultHistory();
 
-        public abstract Tuple<GameState, GameResult> InternalParseImage(Image image);
+        protected abstract Tuple<GameState, GameResult> InternalParseImage(Image image);
 
         public GamerBase(MainForm mainForm)
         {
@@ -54,5 +55,26 @@ namespace Roulette.Gamer
         {
 
         }
+
+        protected void AddResult(GameResult gameResult)
+        {
+            switch(gameResult)
+            {
+                case GameResult.RESULT_BLACK:
+                    resultHistory.CountBlack += 1;
+                    break;
+                case GameResult.RESULT_RED:
+                    resultHistory.CountRed += 1;
+                    break;
+                case GameResult.RESULT_GREEN:
+                    resultHistory.CountGreen += 1;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        abstract protected bool isOutRoom(Image image);
+        abstract protected ResultHistory FirstGetResultHistory(Image image);
     }
 }

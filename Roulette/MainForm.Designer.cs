@@ -30,13 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelTool = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbSupplier = new System.Windows.Forms.ComboBox();
-            this.btnOpen = new System.Windows.Forms.Button();
-            this.btnStart = new System.Windows.Forms.Button();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnSetting = new System.Windows.Forms.Button();
             this.btnCapture = new System.Windows.Forms.Button();
+            this.btnSetting = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
+            this.cbSupplier = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.panelWeb = new System.Windows.Forms.Panel();
             this.ImageCapTimer = new System.Windows.Forms.Timer(this.components);
             this.panelTool.SuspendLayout();
@@ -57,43 +57,24 @@
             this.panelTool.Size = new System.Drawing.Size(1877, 65);
             this.panelTool.TabIndex = 0;
             // 
-            // label1
+            // btnCapture
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 24);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "提供商:";
+            this.btnCapture.Location = new System.Drawing.Point(1024, 5);
+            this.btnCapture.Name = "btnCapture";
+            this.btnCapture.Size = new System.Drawing.Size(133, 55);
+            this.btnCapture.TabIndex = 6;
+            this.btnCapture.Text = "截图";
+            this.btnCapture.UseVisualStyleBackColor = true;
+            this.btnCapture.Click += new System.EventHandler(this.btnCapture_Click);
             // 
-            // cbSupplier
+            // btnSetting
             // 
-            this.cbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSupplier.FormattingEnabled = true;
-            this.cbSupplier.Location = new System.Drawing.Point(113, 10);
-            this.cbSupplier.Name = "cbSupplier";
-            this.cbSupplier.Size = new System.Drawing.Size(198, 32);
-            this.cbSupplier.TabIndex = 1;
-            // 
-            // btnOpen
-            // 
-            this.btnOpen.Location = new System.Drawing.Point(345, 5);
-            this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(133, 52);
-            this.btnOpen.TabIndex = 2;
-            this.btnOpen.Text = "打开网页";
-            this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
-            // 
-            // btnStart
-            // 
-            this.btnStart.Location = new System.Drawing.Point(509, 5);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(133, 55);
-            this.btnStart.TabIndex = 3;
-            this.btnStart.Text = "开始";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            this.btnSetting.Location = new System.Drawing.Point(852, 5);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(133, 55);
+            this.btnSetting.TabIndex = 5;
+            this.btnSetting.Text = "设置";
+            this.btnSetting.UseVisualStyleBackColor = true;
             // 
             // btnStop
             // 
@@ -106,24 +87,43 @@
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
-            // btnSetting
+            // btnStart
             // 
-            this.btnSetting.Location = new System.Drawing.Point(852, 5);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(133, 55);
-            this.btnSetting.TabIndex = 5;
-            this.btnSetting.Text = "设置";
-            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnStart.Location = new System.Drawing.Point(509, 5);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(133, 55);
+            this.btnStart.TabIndex = 3;
+            this.btnStart.Text = "开始";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // btnCapture
+            // btnOpen
             // 
-            this.btnCapture.Location = new System.Drawing.Point(1024, 5);
-            this.btnCapture.Name = "btnCapture";
-            this.btnCapture.Size = new System.Drawing.Size(133, 55);
-            this.btnCapture.TabIndex = 6;
-            this.btnCapture.Text = "截图";
-            this.btnCapture.UseVisualStyleBackColor = true;
-            this.btnCapture.Click += new System.EventHandler(this.btnCapture_Click);
+            this.btnOpen.Location = new System.Drawing.Point(345, 5);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(133, 52);
+            this.btnOpen.TabIndex = 2;
+            this.btnOpen.Text = "打开网页";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            // 
+            // cbSupplier
+            // 
+            this.cbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSupplier.FormattingEnabled = true;
+            this.cbSupplier.Location = new System.Drawing.Point(113, 10);
+            this.cbSupplier.Name = "cbSupplier";
+            this.cbSupplier.Size = new System.Drawing.Size(198, 32);
+            this.cbSupplier.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(94, 24);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "提供商:";
             // 
             // panelWeb
             // 
@@ -144,6 +144,9 @@
             this.ClientSize = new System.Drawing.Size(1877, 1012);
             this.Controls.Add(this.panelWeb);
             this.Controls.Add(this.panelTool);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MainForm";
             this.Text = "轮盘";
             this.panelTool.ResumeLayout(false);

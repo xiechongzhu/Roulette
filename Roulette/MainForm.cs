@@ -76,7 +76,7 @@ namespace Roulette
             if (gamer != null)
             {
                 WindowState = FormWindowState.Normal;
-                Size = new Size(800, 600);
+                Size = new Size(1024, 768);
                 ImageCapTimer.Start();
                 gamer.Start();
                 btnStart.Enabled = false;
