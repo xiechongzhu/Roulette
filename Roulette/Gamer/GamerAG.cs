@@ -10,12 +10,14 @@ namespace Roulette.Gamer
 {
     class GamerAG : GamerBase
     {
+        protected Image currentImage;
         public GamerAG(MainForm mainForm) : base(mainForm)
         {
         }
 
         protected override Tuple<GameState, GameResult> InternalParseImage(Image image)
         {
+            currentImage = (Image)image.Clone();
             GameState gameState = GameState.GAME_UNKNOW;
             GameResult gameResult = GameResult.RESULT_UNKNOW;
             if (isStartImage(image))
@@ -58,6 +60,10 @@ namespace Roulette.Gamer
                     return false;
                 }
             }
+            if(resultHistory == null)
+            {
+                resultHistory = FirstGetResultHistory(image);
+            }
             return true;
         }
 
@@ -85,14 +91,18 @@ namespace Roulette.Gamer
             return false;
         }
 
-        protected override bool isOutRoom(Image image)
+        protected override bool isOutRoom()
         {
+            if(currentImage == null)
+            {
+                return false;
+            }
             List<Color> colors = new List<Color>
             {
-                ImageOperator.GetImageRgb(image, 179, 249),
-                ImageOperator.GetImageRgb(image, 350, 249),
-                ImageOperator.GetImageRgb(image, 267, 382),
-                ImageOperator.GetImageRgb(image, 267, 382)
+                ImageOperator.GetImageRgb(currentImage, 179, 249),
+                ImageOperator.GetImageRgb(currentImage, 350, 249),
+                ImageOperator.GetImageRgb(currentImage, 267, 382),
+                ImageOperator.GetImageRgb(currentImage, 267, 382)
             };
             foreach (Color color in colors)
             {
@@ -107,6 +117,28 @@ namespace Roulette.Gamer
         protected override ResultHistory FirstGetResultHistory(Image image)
         {
             ResultHistory resultHistory = new ResultHistory();
+            List<Point> pointList = new List<Point>();
+
+            int startX = 80, startY = 551;
+            for(int col = 0; col < 10; col++)
+            {
+                for(int row = 0; row < 6; row++)
+                {
+                    Color color = ImageOperator.GetImageRgb(image, startX + (16 * col), startY + (16 * row));
+                    if(color.R >= 200 && color.G < 30 && color.B < 30)
+                    {
+                        resultHistory.CountRed++;
+                    }
+                    else if(color.G >= 120 && color.R < 70 && color.B < 70)
+                    {
+                        resultHistory.CountGreen++;
+                    }
+                    else if(color.R < 30 && color.G < 30 && color.B < 30)
+                    {
+                        resultHistory.CountBlack++;
+                    }
+                }
+            }
             return resultHistory;
         }
     }

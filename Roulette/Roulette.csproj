@@ -78,6 +78,12 @@
     <Compile Include="Defines.cs" />
     <Compile Include="Gamer\GamerAG.cs" />
     <Compile Include="Gamer\GamerBase.cs" />
+    <Compile Include="LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogForm.designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     <Compile Include="Tools\ImageOperator.cs" />
     <Compile Include="Tools\OpenPageSelf.cs" />
     <Compile Include="Tools\WinApi.cs" />
+    <EmbeddedResource Include="LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

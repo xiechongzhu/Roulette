@@ -39,11 +39,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panelWeb = new System.Windows.Forms.Panel();
             this.ImageCapTimer = new System.Windows.Forms.Timer(this.components);
+            this.btnLog = new System.Windows.Forms.Button();
             this.panelTool.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTool
             // 
+            this.panelTool.Controls.Add(this.btnLog);
             this.panelTool.Controls.Add(this.btnCapture);
             this.panelTool.Controls.Add(this.btnSetting);
             this.panelTool.Controls.Add(this.btnStop);
@@ -137,6 +139,16 @@
             // 
             this.ImageCapTimer.Tick += new System.EventHandler(this.ImageCapTimer_Tick);
             // 
+            // btnLog
+            // 
+            this.btnLog.Location = new System.Drawing.Point(1186, 3);
+            this.btnLog.Name = "btnLog";
+            this.btnLog.Size = new System.Drawing.Size(133, 55);
+            this.btnLog.TabIndex = 7;
+            this.btnLog.Text = "日志";
+            this.btnLog.UseVisualStyleBackColor = true;
+            this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -167,6 +179,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelWeb;
         private System.Windows.Forms.Timer ImageCapTimer;
+        private System.Windows.Forms.Button btnLog;
     }
 }
 

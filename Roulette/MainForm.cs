@@ -19,6 +19,7 @@ namespace Roulette
     public partial class MainForm : Form
     {
         private ChromiumWebBrowser browser = new ChromiumWebBrowser();
+        LogForm logForm = new LogForm();
         GamerBase gamer = null;
         public MainForm()
         {
@@ -122,7 +123,7 @@ namespace Roulette
             }
             else
             {
-                //logForm.AddLog(logString);
+                logForm.AddLog(logString);
             }
         }
 
@@ -130,6 +131,12 @@ namespace Roulette
         {
             Image image = BitmapCapture.GetWindowCapture(panelWeb);
             gamer.ParseImage(image);
+        }
+
+        private void btnLog_Click(object sender, EventArgs e)
+        {
+            logForm.Visible = true;
+            logForm.BringToFront();
         }
     }
 }
