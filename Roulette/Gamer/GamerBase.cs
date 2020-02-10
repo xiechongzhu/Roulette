@@ -87,6 +87,7 @@ namespace Roulette.Gamer
                 Log("被踢出房间");
                 isPlayerOut = true;
                 ReEnter();
+                gameState = GameState.GAME_START;
                 isPlayerOut = false;
             }
 

@@ -58,8 +58,13 @@ namespace Roulette.Gamer
         protected override bool isEndImage(Image image, out GameResult gameResult)
         {
             gameResult = GameResult.RESULT_UNKNOW;
-            Color color1 = ImageOperator.GetImageRgb(image, 100, 200);
-            Color color2 = ImageOperator.GetImageRgb(image, 133, 198);
+            Color colorTop = ImageOperator.GetImageRgb(image, 140, 70);
+            if(colorTop.R < 250)
+            {
+                return false;
+            }
+            Color color1 = ImageOperator.GetImageRgb(image, 103, 206);
+            Color color2 = ImageOperator.GetImageRgb(image, 136, 205);
 
             if (color1.R < 10 && color1.G < 10 && color1.B < 10 && color2.R < 10 && color2.G < 10 && color2.B < 10)
             {
