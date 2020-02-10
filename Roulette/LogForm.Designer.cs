@@ -40,10 +40,12 @@
             this.headerContent});
             this.logList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.logList.HideSelection = false;
             this.logList.Location = new System.Drawing.Point(0, 0);
+            this.logList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.logList.MultiSelect = false;
             this.logList.Name = "logList";
-            this.logList.Size = new System.Drawing.Size(985, 766);
+            this.logList.Size = new System.Drawing.Size(492, 383);
             this.logList.TabIndex = 0;
             this.logList.UseCompatibleStateImageBehavior = false;
             this.logList.View = System.Windows.Forms.View.Details;
@@ -60,14 +62,16 @@
             // 
             // LogForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(985, 766);
+            this.ClientSize = new System.Drawing.Size(492, 383);
             this.Controls.Add(this.logList);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LogForm";
             this.Text = "日志";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);
             this.ResumeLayout(false);
 
         }

@@ -4,38 +4,25 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Roulette.Gamer
 {
-    class GamerAG : GamerBase
+    public class GamerAG : GamerBase
     {
-        protected Image currentImage;
         public GamerAG(MainForm mainForm) : base(mainForm)
         {
         }
 
-        protected override Tuple<GameState, GameResult> InternalParseImage(Image image)
+        protected override void ReEnter()
         {
-            currentImage = (Image)image.Clone();
-            GameState gameState = GameState.GAME_UNKNOW;
-            GameResult gameResult = GameResult.RESULT_UNKNOW;
-            if (isStartImage(image))
-            {
-                gameState = GameState.GAME_START;
-                gameResult = GameResult.RESULT_UNKNOW;
-            }
-            else if (isEndImage(image, out gameResult))
-            {
-                AddResult(gameResult);
-                gameState = GameState.GAME_END;
-            }
-
-            image.Dispose();
-            return new Tuple<GameState, GameResult>(gameState, gameResult);
+            BrowserClick(995, 607);
+            Thread.Sleep(500);
+            BrowserClick(276, 557);
         }
 
-        private bool isStartImage(Image image)
+        protected override bool isStartImage(Image image)
         {
             //用开局的"准备下注"黄色字体判断
             Color color;
@@ -63,11 +50,12 @@ namespace Roulette.Gamer
             if(resultHistory == null)
             {
                 resultHistory = FirstGetResultHistory(image);
+                Log(String.Format("当前统计:红={0} 黑={1} 绿={2}", resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen));
             }
             return true;
         }
 
-        private bool isEndImage(Image image, out GameResult gameResult)
+        protected override bool isEndImage(Image image, out GameResult gameResult)
         {
             gameResult = GameResult.RESULT_UNKNOW;
             Color color1 = ImageOperator.GetImageRgb(image, 100, 200);
@@ -91,27 +79,18 @@ namespace Roulette.Gamer
             return false;
         }
 
-        protected override bool isOutRoom()
+        protected override bool isOutRoom(Image image)
         {
-            if(currentImage == null)
+            //240 93 41
+            Color color1 = ImageOperator.GetImageRgb(image, 17, 94);
+            //0 145 189
+            Color color2 = ImageOperator.GetImageRgb(image, 50, 73);
+            if(color1.R > 230 && color1.G < 100 && color1.B < 50
+                && color2.R < 10 && color2.G < 150 && color2.B < 200)
             {
-                return false;
+                return true;
             }
-            List<Color> colors = new List<Color>
-            {
-                ImageOperator.GetImageRgb(currentImage, 179, 249),
-                ImageOperator.GetImageRgb(currentImage, 350, 249),
-                ImageOperator.GetImageRgb(currentImage, 267, 382),
-                ImageOperator.GetImageRgb(currentImage, 267, 382)
-            };
-            foreach (Color color in colors)
-            {
-                if(color.R > 40 && color.G > 40 && color.B > 40)
-                {
-                    return false;
-                }
-            }
-            return true;
+            return false;
         }
 
         protected override ResultHistory FirstGetResultHistory(Image image)

@@ -138,5 +138,14 @@ namespace Roulette
             logForm.Visible = true;
             logForm.BringToFront();
         }
+
+        private void btnSetting_Click(object sender, EventArgs e)
+        {
+            SettingForm settingForm = new SettingForm();
+            if(DialogResult.OK == settingForm.ShowDialog())
+            {
+                gamer.SetSetting(settingForm.GetSetting());
+            }
+        }
     }
 }

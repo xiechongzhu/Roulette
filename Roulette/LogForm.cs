@@ -29,5 +29,11 @@ namespace Roulette
             logList.Items.Add(item);
             logList.EnsureVisible(logList.Items.Count - 1);
         }
+
+        private void LogForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Visible = false;
+            e.Cancel = true;
+        }
     }
 }
