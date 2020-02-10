@@ -24,6 +24,11 @@ namespace Roulette.Gamer
         protected GameResult currentBet;
         List<SaveInfoItem> saveInfoList = new List<SaveInfoItem>();
 
+        public bool IsRunning
+        {
+            get { return isRunning; }
+        }
+
         protected Tuple<GameState, GameResult> InternalParseImage(Image image)
         {
             if (isStartImage(image) && gameState == GameState.GAME_END && !isPlayerOut)

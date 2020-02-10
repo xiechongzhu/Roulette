@@ -174,6 +174,7 @@
             this.MinimizeBox = false;
             this.Name = "MainForm";
             this.Text = "轮盘";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.panelTool.ResumeLayout(false);
             this.panelTool.PerformLayout();
             this.ResumeLayout(false);

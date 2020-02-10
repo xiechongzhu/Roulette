@@ -147,5 +147,14 @@ namespace Roulette
                 gamer?.SetSetting(settingForm.GetSetting());
             }
         }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(gamer != null && gamer.IsRunning)
+            {
+                MessageBox.Show("请先停止", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                e.Cancel = true;
+            }
+        }
     }
 }
