@@ -37,7 +37,7 @@ namespace Roulette.Gamer
                     Log("差值大于设定值,开始下注");
                     isInGamming = true;
                 }
-                if(dif < setting.endDiffer && isInGamming)
+                else if(dif < setting.endDiffer && isInGamming)
                 {
                     Log("差值小于设定值,停止下注");
                     isInGamming = false;
@@ -54,12 +54,16 @@ namespace Roulette.Gamer
                     }
                     Log(String.Format("当前相差值:{0},押:{1}", dif, GameResultToString(currentBet)));
                 }
+                else
+                {
+                    Log("未达到下注条件，本局不下注");
+                }
             }
             else if (isEndImage(image, out gameResult) && gameState == GameState.GAME_START && !isPlayerOut)
             {
                 Log("本局结束，结果为:" + GameResultToString(gameResult));
-                Log(String.Format("当前统计:红={0} 黑={1} 绿={2}", resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen));
                 AddResult(gameResult);
+                Log(String.Format("当前统计:红={0} 黑={1} 绿={2}", resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen));
                 gameState = GameState.GAME_END;
                 if (isInGamming)
                 {

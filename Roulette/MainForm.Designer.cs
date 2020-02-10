@@ -55,7 +55,7 @@
             this.panelTool.Controls.Add(this.label1);
             this.panelTool.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTool.Location = new System.Drawing.Point(0, 0);
-            this.panelTool.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelTool.Margin = new System.Windows.Forms.Padding(2);
             this.panelTool.Name = "panelTool";
             this.panelTool.Size = new System.Drawing.Size(938, 32);
             this.panelTool.TabIndex = 0;
@@ -63,7 +63,7 @@
             // btnLog
             // 
             this.btnLog.Location = new System.Drawing.Point(593, 2);
-            this.btnLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLog.Margin = new System.Windows.Forms.Padding(2);
             this.btnLog.Name = "btnLog";
             this.btnLog.Size = new System.Drawing.Size(66, 28);
             this.btnLog.TabIndex = 7;
@@ -74,7 +74,7 @@
             // btnCapture
             // 
             this.btnCapture.Location = new System.Drawing.Point(512, 2);
-            this.btnCapture.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCapture.Margin = new System.Windows.Forms.Padding(2);
             this.btnCapture.Name = "btnCapture";
             this.btnCapture.Size = new System.Drawing.Size(66, 28);
             this.btnCapture.TabIndex = 6;
@@ -85,7 +85,7 @@
             // btnSetting
             // 
             this.btnSetting.Location = new System.Drawing.Point(426, 2);
-            this.btnSetting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSetting.Margin = new System.Windows.Forms.Padding(2);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(66, 28);
             this.btnSetting.TabIndex = 5;
@@ -97,7 +97,7 @@
             // 
             this.btnStop.Enabled = false;
             this.btnStop.Location = new System.Drawing.Point(338, 2);
-            this.btnStop.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(2);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(66, 28);
             this.btnStop.TabIndex = 4;
@@ -108,7 +108,7 @@
             // btnStart
             // 
             this.btnStart.Location = new System.Drawing.Point(254, 2);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(2);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(66, 28);
             this.btnStart.TabIndex = 3;
@@ -119,7 +119,7 @@
             // btnOpen
             // 
             this.btnOpen.Location = new System.Drawing.Point(172, 2);
-            this.btnOpen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnOpen.Margin = new System.Windows.Forms.Padding(2);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(66, 26);
             this.btnOpen.TabIndex = 2;
@@ -132,7 +132,7 @@
             this.cbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSupplier.FormattingEnabled = true;
             this.cbSupplier.Location = new System.Drawing.Point(56, 5);
-            this.cbSupplier.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbSupplier.Margin = new System.Windows.Forms.Padding(2);
             this.cbSupplier.Name = "cbSupplier";
             this.cbSupplier.Size = new System.Drawing.Size(101, 20);
             this.cbSupplier.TabIndex = 1;
@@ -151,13 +151,14 @@
             // 
             this.panelWeb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelWeb.Location = new System.Drawing.Point(0, 32);
-            this.panelWeb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelWeb.Margin = new System.Windows.Forms.Padding(2);
             this.panelWeb.Name = "panelWeb";
             this.panelWeb.Size = new System.Drawing.Size(938, 474);
             this.panelWeb.TabIndex = 1;
             // 
             // ImageCapTimer
             // 
+            this.ImageCapTimer.Interval = 200;
             this.ImageCapTimer.Tick += new System.EventHandler(this.ImageCapTimer_Tick);
             // 
             // MainForm
@@ -168,7 +169,7 @@
             this.Controls.Add(this.panelWeb);
             this.Controls.Add(this.panelTool);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";

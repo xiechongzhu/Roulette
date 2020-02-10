@@ -144,7 +144,7 @@ namespace Roulette
             SettingForm settingForm = new SettingForm();
             if(DialogResult.OK == settingForm.ShowDialog())
             {
-                gamer.SetSetting(settingForm.GetSetting());
+                gamer?.SetSetting(settingForm.GetSetting());
             }
         }
     }
