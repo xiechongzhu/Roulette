@@ -1,4 +1,5 @@
-﻿using Roulette.Tools;
+﻿using Roulette.Config;
+using Roulette.Tools;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -19,7 +20,14 @@ namespace Roulette.Gamer
         {
             BrowserClick(995, 607);
             Thread.Sleep(500);
-            BrowserClick(276, 557);
+            TablePoints tablePoints = Tables.GetInstance().GetTablePoints(setting.tableName);
+            BrowserClick(tablePoints.reEnterPoint.X, tablePoints.reEnterPoint.Y);
+        }
+
+        protected override void Exit()
+        {
+            TablePoints tablePoints = Tables.GetInstance().GetTablePoints(setting.tableName);
+            BrowserClick(tablePoints.exitPoint.X, tablePoints.exitPoint.Y);
         }
 
         protected override bool isStartImage(Image image)
@@ -89,9 +97,12 @@ namespace Roulette.Gamer
             //240 93 41
             Color color1 = ImageOperator.GetImageRgb(image, 17, 94);
             //0 145 189
-            Color color2 = ImageOperator.GetImageRgb(image, 50, 73);
-            if(color1.R > 230 && color1.G < 100 && color1.B < 50
-                && color2.R < 10 && color2.G < 150 && color2.B < 200)
+            Color color2 = ImageOperator.GetImageRgb(image, 41, 73);
+            //0 79 0
+            Color color3 = ImageOperator.GetImageRgb(image, 860, 87);
+            if (color1.R > 230 && color1.G < 100 && color1.B < 50
+                && color2.R < 10 && color2.G < 150 && color2.B < 200
+                && color3.R > 10 && color3.G < 70 && color3.B > 10)
             {
                 return true;
             }
@@ -124,6 +135,21 @@ namespace Roulette.Gamer
                 }
             }
             return resultHistory;
+        }
+
+        protected override void CloseVedio()
+        {
+            BrowserClick(805, 619);
+        }
+
+        protected override bool isVedioOn(Image image)
+        {
+            Color color = ImageOperator.GetImageRgb(image, 804, 621);
+            if(color.R < 50 && color.G > 120 && color.B < 5)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

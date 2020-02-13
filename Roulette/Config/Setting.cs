@@ -15,6 +15,7 @@ namespace Roulette
 
         public int beginDiffer;
         public int endDiffer;
+        public String tableName;
 
         public bool Save()
         {

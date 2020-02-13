@@ -33,6 +33,8 @@
             this.editBegin = new System.Windows.Forms.TextBox();
             this.editEnd = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -69,7 +71,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(116, 71);
+            this.btnOK.Location = new System.Drawing.Point(115, 89);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 4;
@@ -77,11 +79,31 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 63);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "桌位：";
+            // 
+            // comboBox
+            // 
+            this.comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox.FormattingEnabled = true;
+            this.comboBox.Location = new System.Drawing.Point(61, 63);
+            this.comboBox.Name = "comboBox";
+            this.comboBox.Size = new System.Drawing.Size(129, 20);
+            this.comboBox.TabIndex = 6;
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(203, 106);
+            this.ClientSize = new System.Drawing.Size(204, 120);
+            this.Controls.Add(this.comboBox);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.editEnd);
             this.Controls.Add(this.editBegin);
@@ -105,5 +127,7 @@
         private System.Windows.Forms.TextBox editBegin;
         private System.Windows.Forms.TextBox editEnd;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox comboBox;
     }
 }

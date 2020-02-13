@@ -31,6 +31,11 @@ namespace Roulette.Gamer
 
         protected Tuple<GameState, GameResult> InternalParseImage(Image image)
         {
+            if(isVedioOn(image))
+            {
+                CloseVedio();
+            }
+
             if (isStartImage(image) && gameState == GameState.GAME_END && !isPlayerOut)
             {
                 Log("新的一局开始了");
@@ -63,12 +68,16 @@ namespace Roulette.Gamer
                 {
                     Log(String.Format("当前相差值:{0},未达到下注条件，本局不下注", diff));
                 }
+                Exit();
             }
             else if (isEndImage(image, out gameResult) && gameState == GameState.GAME_START && !isPlayerOut)
             {
                 Log("本局结束，结果为:" + GameResultToString(gameResult));
                 AddResult(gameResult);
-                Log(String.Format("当前统计:红={0} 黑={1} 绿={2}", resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen));
+                if (resultHistory != null)
+                {
+                    Log(String.Format("当前统计:红={0} 黑={1} 绿={2}", resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen));
+                }
                 gameState = GameState.GAME_END;
                 if (isInGamming)
                 {
@@ -89,7 +98,6 @@ namespace Roulette.Gamer
             }
             else if (isOutRoom(image) && !isPlayerOut)
             {
-                Log("被踢出房间");
                 isPlayerOut = true;
                 ReEnter();
                 gameState = GameState.GAME_START;
@@ -199,7 +207,10 @@ namespace Roulette.Gamer
 
         protected abstract bool isStartImage(Image image);
         protected abstract bool isEndImage(Image image, out GameResult gameResult);
+        protected abstract bool isVedioOn(Image image);
         protected abstract void ReEnter();
+        protected abstract void Exit();
+        protected abstract void CloseVedio();
 
         protected void SaveBetResults()
         {

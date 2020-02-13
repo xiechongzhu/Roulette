@@ -53,8 +53,14 @@ namespace Roulette.Tools
         IntPtr hdcSrc,      // handle to source DC
         int nXSrc,          // x-coordinate of source upper-left corner
         int nYSrc,          // y-coordinate of source upper-left corner
-        System.Int32 dwRop  // raster operation code
+        Int32 dwRop  // raster operation code
         );
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int PrintWindow(
+        IntPtr hWnd,
+        IntPtr hdcBlt,
+        int nFlags);
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool SetProcessDPIAware();

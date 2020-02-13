@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roulette.Config;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +21,11 @@ namespace Roulette
 
         private void loadSetting()
         {
+            foreach(String key  in Tables.GetInstance().tablePoints.Keys)
+            {
+                comboBox.Items.Add(key);
+            }
+            
             Setting setting = Setting.Load();
             if(setting == null)
             {
@@ -27,6 +33,7 @@ namespace Roulette
             }
             editBegin.Text = setting.beginDiffer.ToString();
             editEnd.Text = setting.endDiffer.ToString();
+            comboBox.Text = setting.tableName;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -34,7 +41,8 @@ namespace Roulette
             Setting setting = new Setting
             {
                 beginDiffer = int.Parse(editBegin.Text),
-                endDiffer = int.Parse(editEnd.Text)
+                endDiffer = int.Parse(editEnd.Text),
+                tableName = comboBox.Text
             };
             setting.Save();
             DialogResult = DialogResult.OK;
