@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Roulette.Gamer
@@ -31,10 +32,10 @@ namespace Roulette.Gamer
 
         protected Tuple<GameState, GameResult> InternalParseImage(Image image)
         {
-            if(isVedioOn(image))
+            /*if(isVedioOn(image))
             {
                 CloseVedio();
-            }
+            }*/
 
             if (isStartImage(image) && gameState == GameState.GAME_END && !isPlayerOut)
             {
@@ -158,9 +159,18 @@ namespace Roulette.Gamer
             Log("停止运行");
         }
 
-        protected void BrowserClick(Int32 x, Int32 y)
+        protected delegate void BrowserClickDelegate(int waitMs, Int32 x, Int32 y);
+
+        protected void InternalBrowserClick(int waitMs, Int32 x, Int32 y)
         {
+            Thread.Sleep(waitMs);
             mainForm.BrowserClick(x, y);
+        }
+
+        protected void BrowserClick(int waitMs, Int32 x, Int32 y)
+        {
+            BrowserClickDelegate browserClickDeleggate = new BrowserClickDelegate(InternalBrowserClick);
+            browserClickDeleggate.BeginInvoke(waitMs, x, y, null, null);
         }
 
         protected void SendLog(String logString)
@@ -168,7 +178,7 @@ namespace Roulette.Gamer
             mainForm.addLog(logString);
         }
 
-        delegate Tuple<GameState, GameResult> SendImageDelegate(Image image);
+        //delegate Tuple<GameState, GameResult> SendImageDelegate(Image image);
         public void ParseImage(Image image)
         {
             InternalParseImage(image);
@@ -201,7 +211,7 @@ namespace Roulette.Gamer
         protected void Log(String strLog)
         {
             mainForm.addLog(strLog);
-            logWriter.WriteLine("[" + DateTime.Now.ToString("u") + "]" + strLog);
+            logWriter.WriteLine("[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "]" + strLog);
             logWriter.Flush();
         }
 

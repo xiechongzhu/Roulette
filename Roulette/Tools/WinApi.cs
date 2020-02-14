@@ -57,17 +57,21 @@ namespace Roulette.Tools
         );
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern int PrintWindow(
-        IntPtr hWnd,
-        IntPtr hdcBlt,
-        int nFlags);
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool SetProcessDPIAware();
 
-        [System.Runtime.InteropServices.DllImport("kernel32")]
-        public static extern long WritePrivateProfileString(string section, string key, string val, string filepath);
-        [System.Runtime.InteropServices.DllImport("kernel32")]
-        public static extern long GetPrivateProfileString(string section, string key, string def, StringBuilder retval, int size, string filepath);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+        [System.Runtime.InteropServices.DllImport("KERNEL32.DLL")]
+        public static extern bool SetProcessWorkingSetSize(IntPtr pProcess, int dwMinimumWorkingSetSize, int dwMaximumWorkingSetSize);
+
+        [System.Runtime.InteropServices.DllImport("KERNEL32.DLL")]
+        public static extern IntPtr GetCurrentProcess();
     }
 }

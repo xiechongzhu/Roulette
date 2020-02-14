@@ -2,8 +2,7 @@
 # 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
 ################################################################################
 
-/.vs
-/Roulette/.vs/Roulette/v16
-/Roulette/bin/x86/Debug
+/Roulette/.vs/
+/Roulette/bin
 /Roulette/obj
 /Roulette/packages

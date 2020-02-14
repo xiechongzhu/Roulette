@@ -18,16 +18,15 @@ namespace Roulette.Gamer
 
         protected override void ReEnter()
         {
-            BrowserClick(995, 607);
-            Thread.Sleep(500);
+            BrowserClick(0, 995, 607);
             TablePoints tablePoints = Tables.GetInstance().GetTablePoints(setting.tableName);
-            BrowserClick(tablePoints.reEnterPoint.X, tablePoints.reEnterPoint.Y);
+            BrowserClick(10000, tablePoints.reEnterPoint.X, tablePoints.reEnterPoint.Y);
         }
 
         protected override void Exit()
         {
             TablePoints tablePoints = Tables.GetInstance().GetTablePoints(setting.tableName);
-            BrowserClick(tablePoints.exitPoint.X, tablePoints.exitPoint.Y);
+            BrowserClick(0, tablePoints.exitPoint.X, tablePoints.exitPoint.Y);
         }
 
         protected override bool isStartImage(Image image)
@@ -36,13 +35,13 @@ namespace Roulette.Gamer
             Color color;
             List<Color> colorList = new List<Color>();
             //389,216 ===>255,255,1
-            color = ImageOperator.GetImageRgb(image, 479, 284);
+            color = ImageOperator.GetImageRgb(image, 479, 292);
             colorList.Add(color);
             //448,215 ===> 255,251,5
-            color = ImageOperator.GetImageRgb(image, 507, 284);
+            color = ImageOperator.GetImageRgb(image, 508, 286);
             colorList.Add(color);
             //430,220 ===> 246,247,0
-            color = ImageOperator.GetImageRgb(image, 597, 290);
+            color = ImageOperator.GetImageRgb(image, 598, 293);
             colorList.Add(color);
 
             foreach (Color item in colorList)
@@ -120,15 +119,15 @@ namespace Roulette.Gamer
                 for(int row = 0; row < 6; row++)
                 {
                     Color color = ImageOperator.GetImageRgb(image, startX + (16 * col), startY + (16 * row));
-                    if(color.R >= 200 && color.G < 30 && color.B < 30)
+                    if (color.R >= 200 && color.G < 40 && color.B < 40)
                     {
                         resultHistory.CountRed++;
                     }
-                    else if(color.G >= 120 && color.R < 70 && color.B < 70)
+                    else if (color.G >= 120 && color.R < 80 && color.B < 80)
                     {
                         resultHistory.CountGreen++;
                     }
-                    else if(color.R < 30 && color.G < 30 && color.B < 30)
+                    else if (color.R < 30 && color.G < 30 && color.B < 30)
                     {
                         resultHistory.CountBlack++;
                     }
@@ -139,12 +138,12 @@ namespace Roulette.Gamer
 
         protected override void CloseVedio()
         {
-            BrowserClick(805, 619);
+            BrowserClick(0, 805, 619);
         }
 
         protected override bool isVedioOn(Image image)
         {
-            Color color = ImageOperator.GetImageRgb(image, 804, 621);
+            Color color = ImageOperator.GetImageRgb(image, 805, 621);
             if(color.R < 50 && color.G > 120 && color.B < 5)
             {
                 return true;

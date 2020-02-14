@@ -158,7 +158,7 @@
             // 
             // ImageCapTimer
             // 
-            this.ImageCapTimer.Interval = 200;
+            this.ImageCapTimer.Interval = 300;
             this.ImageCapTimer.Tick += new System.EventHandler(this.ImageCapTimer_Tick);
             // 
             // MainForm
