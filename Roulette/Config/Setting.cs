@@ -13,8 +13,8 @@ namespace Roulette
     {
         public static String settingFile = "./setting.xml";
 
-        public int beginDiffer;
-        public int endDiffer;
+        public int diff;
+        public int win;
         public String tableName;
 
         public bool Save()

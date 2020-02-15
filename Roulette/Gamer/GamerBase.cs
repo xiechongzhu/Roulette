@@ -24,6 +24,7 @@ namespace Roulette.Gamer
         protected bool isInGamming = false;
         protected GameResult currentBet;
         List<SaveInfoItem> saveInfoList = new List<SaveInfoItem>();
+        private int win = 0;
 
         public bool IsRunning
         {
@@ -42,17 +43,18 @@ namespace Roulette.Gamer
                 Log("新的一局开始了");
                 gameState = GameState.GAME_START;
                 gameResult = GameResult.RESULT_UNKNOW;
-                int diff = CalcDiff(resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen);
-                if (diff >= setting.beginDiffer && !isInGamming)
+                int diff = CalcDiff(resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen, false);
+                if (diff >= setting.diff && !isInGamming)
                 {
-                    Log(String.Format("当前差值={0},差值大于设定值,开始下注", diff));
+                    Log(String.Format("当前差值(不包括绿色)={0},差值大于等于设定值,开始下注", CalcDiff(resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen, false)));
                     isInGamming = true;
                 }
-                else if(diff < setting.endDiffer && isInGamming)
+                else if(win >= setting.win && isInGamming)
                 {
-                    Log(String.Format("当前差值={0},差值小于设定值,停止下注", diff));
+                    Log(String.Format("已经赢了{0}把,停止下注", win));
                     isInGamming = false;
                     resultHistory = null;
+                    win = 0;
                 }
                 if(isInGamming)
                 {
@@ -64,11 +66,11 @@ namespace Roulette.Gamer
                     {
                         currentBet = GameResult.RESULT_RED;
                     }
-                    Log(String.Format("当前相差值:{0},押:{1}", diff, GameResultToString(currentBet)));
+                    Log(String.Format("当前相差值(包括绿色):{0},押:{1}", CalcDiff(resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen, true), GameResultToString(currentBet)));
                 }
                 else
                 {
-                    Log(String.Format("当前相差值:{0},未达到下注条件，本局不下注", diff));
+                    Log(String.Format("当前差值(不包括绿色)={0},未达到下注条件，本局不下注", diff));
                 }
                 Exit();
             }
@@ -85,13 +87,16 @@ namespace Roulette.Gamer
                 {
                     Log(String.Format("本局结束，结果为:{0}, 押注:{1}, {2}了", GameResultToString(gameResult),
                         GameResultToString(currentBet), currentBet == gameResult ? "赢" : "输"));
+                    win += (currentBet == gameResult ? 1 : -1);
                     saveInfoList.Add(new SaveInfoItem
                     {
                         CountBlack = resultHistory.CountBlack,
                         CountRed = resultHistory.CountRed,
                         CountGreen = resultHistory.CountGreen,
-                        difMax = setting.beginDiffer,
-                        difMin = setting.endDiffer,
+                        diff = setting.diff,
+                        win = setting.win,
+                        current_win = win,
+                        current_diff = CalcDiff(resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen, true),
                         bet = currentBet,
                         result = gameResult,
                         isWin = (currentBet == gameResult)
@@ -102,8 +107,6 @@ namespace Roulette.Gamer
             {
                 isPlayerOut = true;
                 ReEnter();
-                gameState = GameState.GAME_START;
-                isPlayerOut = false;
             }
 
             image.Dispose();
@@ -147,6 +150,7 @@ namespace Roulette.Gamer
                 return;
             }
             isRunning = true;
+            win = 0;
             Log("开始运行");
         }
 
@@ -165,6 +169,7 @@ namespace Roulette.Gamer
         protected void InternalBrowserClick(int waitMs, Int32 x, Int32 y)
         {
             Thread.Sleep(waitMs);
+            isPlayerOut = false;
             mainForm.BrowserClick(x, y);
         }
 
@@ -234,12 +239,13 @@ namespace Roulette.Gamer
             headRow.CreateCell(0).SetCellValue("黑总数");
             headRow.CreateCell(1).SetCellValue("红总数");
             headRow.CreateCell(2).SetCellValue("绿总数");
-            headRow.CreateCell(3).SetCellValue("开始下注差值");
-            headRow.CreateCell(4).SetCellValue("停止下注差值");
-            headRow.CreateCell(5).SetCellValue("当前差值");
-            headRow.CreateCell(6).SetCellValue("当前下注");
-            headRow.CreateCell(7).SetCellValue("本局结果");
-            headRow.CreateCell(8).SetCellValue("下注结果");
+            headRow.CreateCell(3).SetCellValue("预设差值(不包括绿色)");
+            headRow.CreateCell(4).SetCellValue("预设利润");
+            headRow.CreateCell(5).SetCellValue("当前利润");
+            headRow.CreateCell(6).SetCellValue("差值(包括绿色)");
+            headRow.CreateCell(7).SetCellValue("当前下注");
+            headRow.CreateCell(8).SetCellValue("本局结果");
+            headRow.CreateCell(9).SetCellValue("下注结果");
 
             foreach(var info in saveInfoList)
             {
@@ -247,31 +253,39 @@ namespace Roulette.Gamer
                 row.CreateCell(0).SetCellValue(info.CountBlack);
                 row.CreateCell(1).SetCellValue(info.CountRed);
                 row.CreateCell(2).SetCellValue(info.CountGreen);
-                row.CreateCell(3).SetCellValue(info.difMax);
-                row.CreateCell(4).SetCellValue(info.difMin);
-                row.CreateCell(5).SetCellValue(CalcDiff(info.CountRed, info.CountBlack, info.CountGreen));
-                row.CreateCell(6).SetCellValue(GameResultToString(info.bet));
-                row.CreateCell(7).SetCellValue(GameResultToString(info.result));
-                row.CreateCell(8).SetCellValue(info.bet == info.result ? "赢":"输");
+                row.CreateCell(3).SetCellValue(info.diff);
+                row.CreateCell(4).SetCellValue(info.win);
+                row.CreateCell(5).SetCellValue(info.current_win);
+                row.CreateCell(6).SetCellValue(info.current_diff);
+                row.CreateCell(7).SetCellValue(GameResultToString(info.bet));
+                row.CreateCell(8).SetCellValue(GameResultToString(info.result));
+                row.CreateCell(9).SetCellValue(info.isWin ? "赢":"输");
             }
 
             workbook.Write(fs);
             fs.Close();
         }
 
-        protected int CalcDiff(int red, int black, int green)
+        protected int CalcDiff(int red, int black, int green, bool withGreen)
         {
-            if(black > red)
+            if (withGreen)
             {
-                return black + green - red;
-            }
-            else if(red > black)
-            {
-                return red + green - black;
+                if (black > red)
+                {
+                    return black + green - red;
+                }
+                else if (red > black)
+                {
+                    return red + green - black;
+                }
+                else
+                {
+                    return 0;
+                }
             }
             else
             {
-                return 0;
+                return Math.Abs(red - black);
             }
         }
     }

@@ -31,8 +31,8 @@ namespace Roulette
             {
                 return;
             }
-            editBegin.Text = setting.beginDiffer.ToString();
-            editEnd.Text = setting.endDiffer.ToString();
+            editBegin.Text = setting.diff.ToString();
+            editWin.Text = setting.win.ToString();
             comboBox.Text = setting.tableName;
         }
 
@@ -40,8 +40,8 @@ namespace Roulette
         {
             Setting setting = new Setting
             {
-                beginDiffer = int.Parse(editBegin.Text),
-                endDiffer = int.Parse(editEnd.Text),
+                diff = int.Parse(editBegin.Text),
+                win = int.Parse(editWin.Text),
                 tableName = comboBox.Text
             };
             setting.Save();
@@ -53,8 +53,8 @@ namespace Roulette
         {
             return new Setting
             {
-                beginDiffer = int.Parse(editBegin.Text),
-                endDiffer = int.Parse(editEnd.Text)
+                diff = int.Parse(editBegin.Text),
+                win = int.Parse(editWin.Text)
             };
         }
     }

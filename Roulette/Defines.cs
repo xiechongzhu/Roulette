@@ -38,8 +38,10 @@ namespace Roulette
         public int CountBlack;
         public int CountRed;
         public int CountGreen;
-        public int difMax;
-        public int difMin;
+        public int diff;
+        public int win;
+        public int current_win;
+        public int current_diff;
         public GameResult bet;
         public GameResult result;
         public bool isWin;
