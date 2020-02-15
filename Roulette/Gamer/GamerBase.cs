@@ -52,6 +52,7 @@ namespace Roulette.Gamer
                 {
                     Log(String.Format("当前差值={0},差值小于设定值,停止下注", diff));
                     isInGamming = false;
+                    resultHistory = null;
                 }
                 if(isInGamming)
                 {
