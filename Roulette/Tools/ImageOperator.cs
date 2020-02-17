@@ -9,11 +9,9 @@ namespace Roulette.Tools
 {
     class ImageOperator
     {
-        public static Color GetImageRgb(Image image, Int32 x, Int32 y)
+        public static Color GetImageRgb(Bitmap image, Int32 x, Int32 y)
         {
-            Bitmap bitmap = new Bitmap(image);
-            Color color = bitmap.GetPixel(x, y);
-            bitmap.Dispose();
+            Color color = image.GetPixel(x, y);
             return color;
         }
     }

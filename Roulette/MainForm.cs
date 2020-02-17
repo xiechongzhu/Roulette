@@ -56,7 +56,7 @@ namespace Roulette
 
         private void btnCapture_Click(object sender, EventArgs e)
         {
-            Image image = BitmapCapture.GetWindowCapture(panelWeb);
+            Bitmap image = BitmapCapture.GetWindowCapture(panelWeb);
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "JPEG图片(*.jpg)|*.jpg";
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -152,8 +152,11 @@ namespace Roulette
 
         private void ImageCapTimer_Tick(object sender, EventArgs e)
         {
-            Image image = BitmapCapture.GetWindowCapture(panelWeb);
-            gamer.ParseImage(image);
+            Bitmap image = BitmapCapture.GetWindowCapture(panelWeb);
+            if (image != null)
+            {
+                gamer.ParseImage(image);
+            }
             DateTime now = DateTime.Now;
             if(now > lastReleaseMemoryTime.AddSeconds(10))
             {

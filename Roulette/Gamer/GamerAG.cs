@@ -29,7 +29,7 @@ namespace Roulette.Gamer
             BrowserClick(0, tablePoints.exitPoint.X, tablePoints.exitPoint.Y);
         }
 
-        protected override bool isStartImage(Image image)
+        protected override bool isStartImage(Bitmap image)
         {
             //用开局的"准备下注"黄色字体判断
             Color color;
@@ -62,7 +62,7 @@ namespace Roulette.Gamer
             return true;
         }
 
-        protected override bool isEndImage(Image image, out GameResult gameResult)
+        protected override bool isEndImage(Bitmap image, out GameResult gameResult)
         {
             gameResult = GameResult.RESULT_UNKNOW;
             Color colorTop = ImageOperator.GetImageRgb(image, 140, 70);
@@ -72,8 +72,10 @@ namespace Roulette.Gamer
             }
             Color color1 = ImageOperator.GetImageRgb(image, 103, 206);
             Color color2 = ImageOperator.GetImageRgb(image, 136, 205);
+            Color color3 = ImageOperator.GetImageRgb(image, 146, 179);
 
-            if (color1.R < 10 && color1.G < 10 && color1.B < 10 && color2.R < 10 && color2.G < 10 && color2.B < 10)
+            if (color1.R < 10 && color1.G < 10 && color1.B < 10 && color2.R < 10 && color2.G < 10 && color2.B < 10
+                && ColorInRect(image, Color.FromArgb(255, 255, 255), new Rectangle(81, 147, 70, 70)))
             {
                 gameResult = GameResult.RESULT_BLACK;
                 return true;
@@ -91,7 +93,7 @@ namespace Roulette.Gamer
             return false;
         }
 
-        protected override bool isOutRoom(Image image)
+        protected override bool isOutRoom(Bitmap image)
         {
             //240 93 41
             Color color1 = ImageOperator.GetImageRgb(image, 17, 94);
@@ -108,7 +110,7 @@ namespace Roulette.Gamer
             return false;
         }
 
-        protected override ResultHistory FirstGetResultHistory(Image image)
+        protected override ResultHistory FirstGetResultHistory(Bitmap image)
         {
             ResultHistory resultHistory = new ResultHistory();
             List<Point> pointList = new List<Point>();
@@ -141,12 +143,28 @@ namespace Roulette.Gamer
             BrowserClick(0, 805, 619);
         }
 
-        protected override bool isVedioOn(Image image)
+        protected override bool isVedioOn(Bitmap image)
         {
             Color color = ImageOperator.GetImageRgb(image, 805, 621);
             if(color.R < 50 && color.G > 120 && color.B < 5)
             {
                 return true;
+            }
+            return false;
+        }
+
+        protected bool ColorInRect(Bitmap bitmap, Color color, Rectangle rectangle)
+        {
+            for(int col = 0; col < rectangle.Width; ++col)
+            {
+                for(int row = 0; row < rectangle.Height; ++row)
+                {
+                    Color tempColor = ImageOperator.GetImageRgb(bitmap, rectangle.X + col, rectangle.Y + row);
+                    if(Math.Abs(color.R - tempColor.R) < 10 && Math.Abs(color.G - tempColor.G) < 10 && Math.Abs(color.B - tempColor.B) < 10)
+                    {
+                        return true;
+                    }
+                }
             }
             return false;
         }

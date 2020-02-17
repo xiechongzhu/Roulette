@@ -31,7 +31,7 @@ namespace Roulette.Gamer
             get { return isRunning; }
         }
 
-        protected Tuple<GameState, GameResult> InternalParseImage(Image image)
+        protected Tuple<GameState, GameResult> InternalParseImage(Bitmap image)
         {
             /*if(isVedioOn(image))
             {
@@ -184,10 +184,12 @@ namespace Roulette.Gamer
             mainForm.addLog(logString);
         }
 
-        //delegate Tuple<GameState, GameResult> SendImageDelegate(Image image);
-        public void ParseImage(Image image)
+        delegate Tuple<GameState, GameResult> ParseImageDelegete(Bitmap image);
+        public void ParseImage(Bitmap image)
         {
-            InternalParseImage(image);
+            ParseImageDelegete parseImageDelegete = new ParseImageDelegete(InternalParseImage);
+            parseImageDelegete.BeginInvoke(image, null, null);
+            //InternalParseImage(image);
         }
 
         protected void AddResult(GameResult gameResult)
@@ -212,8 +214,8 @@ namespace Roulette.Gamer
             }
         }
 
-        abstract protected bool isOutRoom(Image image);
-        abstract protected ResultHistory FirstGetResultHistory(Image image);
+        abstract protected bool isOutRoom(Bitmap image);
+        abstract protected ResultHistory FirstGetResultHistory(Bitmap image);
         protected void Log(String strLog)
         {
             mainForm.addLog(strLog);
@@ -221,9 +223,9 @@ namespace Roulette.Gamer
             logWriter.Flush();
         }
 
-        protected abstract bool isStartImage(Image image);
-        protected abstract bool isEndImage(Image image, out GameResult gameResult);
-        protected abstract bool isVedioOn(Image image);
+        protected abstract bool isStartImage(Bitmap image);
+        protected abstract bool isEndImage(Bitmap image, out GameResult gameResult);
+        protected abstract bool isVedioOn(Bitmap image);
         protected abstract void ReEnter();
         protected abstract void Exit();
         protected abstract void CloseVedio();

@@ -27,6 +27,10 @@ namespace Roulette.Tools
          IntPtr hdc,           // handle to DC
          IntPtr hgdiobj    // handle to object
          );
+
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
+
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
         public static extern int DeleteDC(
          IntPtr hdc           // handle to DC
