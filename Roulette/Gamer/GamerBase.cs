@@ -25,6 +25,7 @@ namespace Roulette.Gamer
         protected GameResult currentBet;
         List<SaveInfoItem> saveInfoList = new List<SaveInfoItem>();
         private int win = 0;
+        private int roundCount;
 
         public bool IsRunning
         {
@@ -72,7 +73,12 @@ namespace Roulette.Gamer
                 {
                     Log(String.Format("当前差值(不包括绿色)={0},未达到下注条件，本局不下注", diff));
                 }
-                Exit();
+                Log(String.Format("当前局数:{0}", ++roundCount));
+                if (roundCount % 3 == 0)
+                {
+                    Log("主动退出房间");
+                    Exit();
+                }
             }
             else if (isEndImage(image, out gameResult) && gameState == GameState.GAME_START && !isPlayerOut)
             {
@@ -140,6 +146,7 @@ namespace Roulette.Gamer
 
         public void Start()
         {
+            roundCount = 0;
             String strLogDir = AppDomain.CurrentDomain.BaseDirectory + "Log";
             Directory.CreateDirectory(strLogDir);
             logWriter = new StreamWriter(strLogDir + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".log", true);
