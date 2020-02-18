@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace Roulette.Gamer
             get { return isRunning; }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         protected Tuple<GameState, GameResult> InternalParseImage(Bitmap image)
         {
             /*if(isVedioOn(image))
@@ -39,9 +41,10 @@ namespace Roulette.Gamer
                 CloseVedio();
             }*/
 
-            if (isStartImage(image) && gameState == GameState.GAME_END && !isPlayerOut)
+            if (isStartImage(image) && gameState != GameState.GAME_START)
             {
                 Log("新的一局开始了");
+                isPlayerOut = false;
                 gameState = GameState.GAME_START;
                 gameResult = GameResult.RESULT_UNKNOW;
                 int diff = CalcDiff(resultHistory.CountRed, resultHistory.CountBlack, resultHistory.CountGreen, false);
@@ -80,7 +83,7 @@ namespace Roulette.Gamer
                     Exit();
                 }
             }
-            else if (isEndImage(image, out gameResult) && gameState == GameState.GAME_START && !isPlayerOut)
+            else if (isEndImage(image, out gameResult) && gameState == GameState.GAME_START)
             {
                 Log("本局结束，结果为:" + GameResultToString(gameResult));
                 AddResult(gameResult);
@@ -176,7 +179,6 @@ namespace Roulette.Gamer
         protected void InternalBrowserClick(int waitMs, Int32 x, Int32 y)
         {
             Thread.Sleep(waitMs);
-            isPlayerOut = false;
             mainForm.BrowserClick(x, y);
         }
 

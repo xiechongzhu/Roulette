@@ -35,13 +35,13 @@ namespace Roulette.Gamer
             Color color;
             List<Color> colorList = new List<Color>();
             //389,216 ===>255,255,1
-            color = ImageOperator.GetImageRgb(image, 479, 292);
+            color = ImageOperator.GetImageRgb(image, 479, 288);
             colorList.Add(color);
             //448,215 ===> 255,251,5
             color = ImageOperator.GetImageRgb(image, 508, 286);
             colorList.Add(color);
             //430,220 ===> 246,247,0
-            color = ImageOperator.GetImageRgb(image, 598, 293);
+            color = ImageOperator.GetImageRgb(image, 598, 288);
             colorList.Add(color);
 
             foreach (Color item in colorList)
@@ -49,7 +49,7 @@ namespace Roulette.Gamer
                 Int32 r = item.R;
                 Int32 g = item.G;
                 Int32 b = item.B;
-                if (r < 220 || g < 220 || b > 20)
+                if (r < 220 || g < 220 || b > 50)
                 {
                     return false;
                 }

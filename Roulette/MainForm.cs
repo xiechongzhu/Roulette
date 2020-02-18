@@ -18,15 +18,18 @@ namespace Roulette
     public partial class MainForm : Form
     {
         private DateTime lastReleaseMemoryTime = DateTime.Now;
-        private NewWebBrowser browser = new NewWebBrowser();
+        //private NewWebBrowser browser = new NewWebBrowser();
+        EO.WinForm.WebControl browser = new EO.WinForm.WebControl();
         LogForm logForm = new LogForm();
         GamerBase gamer = null;
         public MainForm()
         {
             InitializeComponent();
-            browser.ScriptErrorsSuppressed = true;
+            browser.WebView = new EO.WebBrowser.WebView();
+            //browser.ScriptErrorsSuppressed = true;
             WindowState = FormWindowState.Maximized;
             browser.Dock = DockStyle.Fill;
+            browser.WebView.NewWindow += WebView_NewWindow;
             panelWeb.Controls.Add(browser);
 
             String errMsg = null;
@@ -42,21 +45,27 @@ namespace Roulette
             }
             cbSupplier.SelectedIndex = 0;
 
-            browser.BeforeNewWindow2 += Browser_BeforeNewWindow2;
+            //browser.BeforeNewWindow2 += Browser_BeforeNewWindow2;
         }
 
-        private void Browser_BeforeNewWindow2(WebBrowserUrl2 webPra, WebBrowserEvent cancel)
+        private void WebView_NewWindow(object sender, EO.WebBrowser.NewWindowEventArgs e)
+        {
+            browser.WebView.Url = e.TargetUrl;
+        }
+
+        /*private void Browser_BeforeNewWindow2(WebBrowserUrl2 webPra, WebBrowserEvent cancel)
         {
             if(webPra != null)
             {
                 browser.Navigate(webPra.Url);
                 cancel.cancel = true;
             }
-        }
+        }*/
 
         private void btnCapture_Click(object sender, EventArgs e)
         {
-            Bitmap image = BitmapCapture.GetWindowCapture(panelWeb);
+            //Bitmap image = BitmapCapture.GetWindowCapture(panelWeb);
+            Image image = browser.WebView.Capture();
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "JPEG图片(*.jpg)|*.jpg";
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -68,7 +77,8 @@ namespace Roulette
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            browser.Navigate(SiteLoader.GetInstance().GetSiteUrl(cbSupplier.Text));
+            //browser.Navigate(SiteLoader.GetInstance().GetSiteUrl(cbSupplier.Text));
+            browser.WebView.Url = SiteLoader.GetInstance().GetSiteUrl(cbSupplier.Text);
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -120,7 +130,7 @@ namespace Roulette
         }
 
         delegate void InternalBrowserClickDelegate(Int32 x, Int32 y);
-        protected void InternalBrowserClick(Int32 x, Int32 y)
+        /*protected void InternalBrowserClick(Int32 x, Int32 y)
         {
             IntPtr handle = browser.Handle;
             StringBuilder className = new StringBuilder(100);
@@ -135,6 +145,11 @@ namespace Roulette
             const uint upCode = 0x202; // Left click up code
             WinApi.SendMessage(handle, downCode, wParam, lParam); // Mouse button down
             WinApi.SendMessage(handle, upCode, wParam, lParam); // Mouse button up
+        }*/
+
+        protected void InternalBrowserClick(Int32 x, Int32 y)
+        {
+            browser.WebView.SendMouseEvent(EO.WebBrowser.MouseEventType.Click, new EO.Base.UI.MouseEventArgs(EO.Base.UI.MouseButtons.Left, 1, x, y, 0));
         }
 
         delegate void SendLogDelegate(String logString);
@@ -152,17 +167,19 @@ namespace Roulette
 
         private void ImageCapTimer_Tick(object sender, EventArgs e)
         {
-            Bitmap image = BitmapCapture.GetWindowCapture(panelWeb);
+            CaptureDelegate captureDelegate = new CaptureDelegate(InternalCapture);
+            captureDelegate.BeginInvoke(null, null);
+        }
+
+        private delegate void CaptureDelegate();
+        private void InternalCapture()
+        {
+            Image image = browser.WebView.Capture();
             if (image != null)
             {
-                gamer.ParseImage(image);
-            }
-            DateTime now = DateTime.Now;
-            if(now > lastReleaseMemoryTime.AddSeconds(10))
-            {
-                IntPtr pHandle = WinApi.GetCurrentProcess();
-                WinApi.SetProcessWorkingSetSize(pHandle, -1, -1);
-                lastReleaseMemoryTime = now;
+                Bitmap bitmap = new Bitmap(image);
+                image.Dispose();
+                gamer.ParseImage(bitmap);
             }
         }
 
